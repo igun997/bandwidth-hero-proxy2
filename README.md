@@ -58,6 +58,16 @@ Powered by [Sharp](https://github.com/lovell/sharp) for fast, high-quality image
 
 Click the button above. Netlify will clone this repo to your account and deploy it automatically.
 
+### Buildpack Deployment
+
+This project supports Node.js buildpacks. Buildpacks detect `package-lock.json`, install dependencies with `npm ci`, and run:
+
+```
+npm start
+```
+
+`npm start` launches `node server.js` and listens on `PORT` (default `3000`).
+
 ### Configure the Extension
 
 After deployment, open the **Bandwidth Guardian** extension settings and set the **Proxy URL** to:
