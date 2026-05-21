@@ -8,8 +8,14 @@
 
 const pick           = require("../util/pick");
 const fetch          = require("node-fetch");
+const https          = require("https");
 const shouldCompress = require("../util/shouldCompress");
 const compress       = require("../util/compress");
+
+// Agent ignores cert errors (expired certs common on image hosts)
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
 
 const DEFAULT_QUALITY = 40;
 
@@ -108,6 +114,7 @@ exports.handler = async (e) => {
       const response = await fetchWithTimeout(
         r,
         {
+          agent: parsedUrl.protocol === "https:" ? httpsAgent : undefined,
           headers: {
             ...pick(e.headers, ["cookie", "dnt", "referer"]),
             "user-agent":
